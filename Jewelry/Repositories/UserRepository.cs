@@ -49,7 +49,31 @@ namespace Jewelry.Repositories
 
         public UserModel GetByUsername(string username)
         {
-            throw new NotImplementedException();
+            UserModel user = null;
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [User] WHERE [username]=@username";
+                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = username;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        user = new UserModel()
+                        {
+                            Id = reader[0].ToString(),
+                            Username = reader[1].ToString(),
+                            Password = string.Empty,
+                        };
+                    }
+                }
+            }
+
+            return user;
         }
 
         public void Remove(int id)
