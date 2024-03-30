@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Jewelry.ViewModel
@@ -19,7 +15,7 @@ namespace Jewelry.ViewModel
             _executeAction = executeAction;
             _canExucuteAction = null;
         }
-        
+
         public ViewModelCommand(Action<object> executeAction, Predicate<object> canExucuteAction)
         {
             _executeAction = executeAction;

@@ -1,14 +1,8 @@
 ﻿using Jewelry.Model;
 using Jewelry.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Principal;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Jewelry.ViewModel
@@ -24,9 +18,9 @@ namespace Jewelry.ViewModel
         private IUserRepository _userRepository;
 
         //Properties
-        public string Username 
-        { 
-            get => _username; 
+        public string Username
+        {
+            get => _username;
             set
             {
                 _username = value;
@@ -76,7 +70,7 @@ namespace Jewelry.ViewModel
         {
             bool validData;
 
-            if(string.IsNullOrWhiteSpace(Username) || Username.Length < 3 || 
+            if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3 ||
                 Password == null || Password.Length < 3)
                 validData = false;
             else
