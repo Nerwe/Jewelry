@@ -25,7 +25,7 @@ namespace Jewelry.Repositories
                 command.CommandText = "SELECT * FROM [User] WHERE [username]=@username AND [password]=@password";
                 command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
                 command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
-                validUser = command.ExecuteScalar() == null ? false : true;
+                validUser = command.ExecuteScalar() != null;
 
             }
 
