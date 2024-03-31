@@ -6,7 +6,7 @@ namespace Jewelry.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropetryChanged(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

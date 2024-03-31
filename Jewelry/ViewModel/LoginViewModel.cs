@@ -24,7 +24,7 @@ namespace Jewelry.ViewModel
             set
             {
                 _username = value;
-                OnPropetryChanged(nameof(Username));
+                OnPropertyChanged(nameof(Username));
             }
         }
         public SecureString Password
@@ -33,7 +33,7 @@ namespace Jewelry.ViewModel
             set
             {
                 _password = value;
-                OnPropetryChanged(nameof(Password));
+                OnPropertyChanged(nameof(Password));
             }
         }
         public string ErrorMessage
@@ -42,7 +42,7 @@ namespace Jewelry.ViewModel
             set
             {
                 _errorMessage = value;
-                OnPropetryChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(ErrorMessage));
             }
         }
         public bool IsViewVisible
@@ -51,7 +51,7 @@ namespace Jewelry.ViewModel
             set
             {
                 _isViewVisible = value;
-                OnPropetryChanged(nameof(IsViewVisible));
+                OnPropertyChanged(nameof(IsViewVisible));
             }
         }
 

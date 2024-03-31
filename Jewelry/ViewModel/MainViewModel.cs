@@ -17,7 +17,7 @@ namespace Jewelry.ViewModel
             set
             {
                 _currentUserAccount = value;
-                OnPropetryChanged(nameof(CurrentUserAccount));
+                OnPropertyChanged(nameof(CurrentUserAccount));
             }
         }
 
@@ -34,13 +34,12 @@ namespace Jewelry.ViewModel
             if (user != null)
             {
                 CurrentUserAccount.Username = user.Username;
-                CurrentUserAccount.DisplayName = $"Welcome, {user.Username} ;)";
+                CurrentUserAccount.DisplayName = $"Welcome, {user.Username}";
                 CurrentUserAccount.ProfilePicture = null;
             }
             else
             {
                 CurrentUserAccount.DisplayName = "Invalid username, not logged in";
-                Application.Current.Shutdown();
             }
 
         }
