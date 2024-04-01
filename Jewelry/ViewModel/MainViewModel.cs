@@ -1,11 +1,8 @@
 ﻿using FontAwesome.Sharp;
 using Jewelry.Model;
 using Jewelry.Repositories;
-using System;
 using System.Threading;
-using System.Windows;
 using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Jewelry.ViewModel
 {
@@ -30,7 +27,7 @@ namespace Jewelry.ViewModel
         }
 
         public ViewModelBase CurrentChildView
-        { 
+        {
             get => _currentChildView;
             set
             {

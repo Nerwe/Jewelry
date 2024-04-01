@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using System;
 using System.Runtime.InteropServices;
-using System;
+using System.Windows;
 using System.Windows.Interop;
 
 namespace Jewelry.View
