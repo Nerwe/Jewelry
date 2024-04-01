@@ -1,7 +1,11 @@
-﻿using Jewelry.Model;
+﻿using FontAwesome.Sharp;
+using Jewelry.Model;
 using Jewelry.Repositories;
+using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Jewelry.ViewModel
 {
@@ -10,7 +14,11 @@ namespace Jewelry.ViewModel
         //Fields
         private UserAccountModel _currentUserAccount;
         private IUserRepository _userRepository;
+        private ViewModelBase _currentChildView;
+        private string _caption;
+        private IconChar _icon;
 
+        //Properties
         public UserAccountModel CurrentUserAccount
         {
             get => _currentUserAccount;
@@ -21,11 +29,65 @@ namespace Jewelry.ViewModel
             }
         }
 
+        public ViewModelBase CurrentChildView
+        { 
+            get => _currentChildView;
+            set
+            {
+                _currentChildView = value;
+                OnPropertyChanged(nameof(CurrentChildView));
+            }
+        }
+        public string Caption
+        {
+            get => _caption;
+            set
+            {
+                _caption = value;
+                OnPropertyChanged(nameof(Caption));
+            }
+        }
+        public IconChar Icon
+        {
+            get => _icon;
+            set
+            {
+                _icon = value;
+                OnPropertyChanged(nameof(Icon));
+            }
+        }
+
+        //Commands
+        public ICommand ShowHomeViewCommand { get; }
+        public ICommand ShowOrdersViewCommand { get; }
+
         public MainViewModel()
         {
             _userRepository = new UserRepository();
             CurrentUserAccount = new UserAccountModel();
+
+            //Initialize commands
+            ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeCommand);
+            ShowOrdersViewCommand = new ViewModelCommand(ExecuteShowOrdersCommand);
+
+            //Default view
+            ExecuteShowHomeCommand(null);
+
             LoadCurrentUserData();
+        }
+
+        private void ExecuteShowOrdersCommand(object obj)
+        {
+            CurrentChildView = new OrdersViewModel();
+            Caption = "Orders";
+            Icon = IconChar.ListUl;
+        }
+
+        private void ExecuteShowHomeCommand(object obj)
+        {
+            CurrentChildView = new HomeViewModel();
+            Caption = "Dashboard";
+            Icon = IconChar.Home;
         }
 
         private void LoadCurrentUserData()
@@ -34,12 +96,12 @@ namespace Jewelry.ViewModel
             if (user != null)
             {
                 CurrentUserAccount.Username = user.Username;
-                CurrentUserAccount.DisplayName = $"Welcome, {user.Username}";
+                CurrentUserAccount.DisplayName = $"{user.Username}";
                 CurrentUserAccount.ProfilePicture = null;
             }
             else
             {
-                CurrentUserAccount.DisplayName = "Invalid username, not logged in";
+                CurrentUserAccount.DisplayName = "Invalid username";
             }
 
         }
