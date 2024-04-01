@@ -25,7 +25,6 @@ namespace Jewelry.ViewModel
                 OnPropertyChanged(nameof(CurrentUserAccount));
             }
         }
-
         public ViewModelBase CurrentChildView
         {
             get => _currentChildView;
@@ -100,7 +99,6 @@ namespace Jewelry.ViewModel
             {
                 CurrentUserAccount.DisplayName = "Invalid username";
             }
-
         }
     }
 }
