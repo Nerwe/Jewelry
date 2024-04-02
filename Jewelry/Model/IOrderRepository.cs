@@ -7,8 +7,8 @@ namespace Jewelry.Model
         void Add(OrderModel orderModel);
         void Edit(OrderModel orderModel);
         void Remove(int id);
-        OrderModel GetById(int id);
-        OrderModel GetByCashierId(int cashier_id);
+        IEnumerable<OrderModel> GetById(int id);
         IEnumerable<OrderModel> GetByAll();
+        IEnumerable<OrderModel> GetByCashierId(int cashier_id);
     }
 }

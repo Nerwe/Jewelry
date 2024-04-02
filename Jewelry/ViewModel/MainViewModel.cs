@@ -74,8 +74,8 @@ namespace Jewelry.ViewModel
 
         private void ExecuteShowOrdersCommand(object obj)
         {
-            CurrentChildView = new OrdersViewModel();
-            Caption = "Orders";
+            CurrentChildView = new AnalyzeViewModel();
+            Caption = "Analyze";
             Icon = IconChar.ListUl;
         }
 

@@ -22,8 +22,8 @@
             <local:HomeView/>
         </DataTemplate>
         
-        <DataTemplate DataType="{x:Type viewModel:OrdersViewModel}">
-            <local:OrdersView/>
+        <DataTemplate DataType="{x:Type viewModel:AnalyzeViewModel}">
+            <local:AnalyzeView/>
         </DataTemplate>
     </Window.Resources>
 
@@ -93,7 +93,7 @@
                                  Command="{Binding ShowOrdersViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="ListUl" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Orders" Style="{StaticResource menuButtonText}"/>
+                            <TextBlock Text="Analyze" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
                     <RadioButton Style="{StaticResource menuButton}"

@@ -3,11 +3,11 @@
 namespace Jewelry.View
 {
     /// <summary>
-    /// Логика взаимодействия для OrdersView.xaml
+    /// Логика взаимодействия для AnalyzeView.xaml
     /// </summary>
-    public partial class OrdersView : UserControl
+    public partial class AnalyzeView : UserControl
     {
-        public OrdersView()
+        public AnalyzeView()
         {
             InitializeComponent();
         }

@@ -7,8 +7,8 @@ namespace Jewelry.Model
         void Add(ProductModel productModel);
         void Edit(ProductModel productModel);
         void Remove(int id);
-        ProductModel GetById(int id);
-        ProductModel GetByName(string name);
+        IEnumerable<ProductModel> GetById(int id);
+        IEnumerable<ProductModel> GetByName(string name);
         IEnumerable<ProductModel> GetByAll();
     }
 }

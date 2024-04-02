@@ -19,37 +19,71 @@ namespace Jewelry.Repositories
 
         public IEnumerable<OrderProductModel> GetByAll()
         {
-            throw new NotImplementedException();
-        }
-
-        public OrderProductModel GetByOrderId(int id)
-        {
-            OrderProductModel orderProduct = null;
+            List<OrderProductModel> orderProducts = new List<OrderProductModel>();
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [OrderProducs] WHERE [order_id]=@id";
-                command.Parameters.Add("@id", System.Data.SqlDbType.NVarChar).Value = id;
+                command.CommandText = "EXEC GetOrderProducts;";
 
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        orderProduct = new OrderProductModel()
+                        OrderProductModel orderProduct = new OrderProductModel()
                         {
                             Order_Id = reader[0].ToString(),
-                            Product_Id = reader[1].ToString(),
+                            Product_Name = reader[1].ToString(),
                             Quantity = reader[2].ToString(),
-                            Price = reader[3].ToString()
+                            Price = reader[3].ToString(),
+                            Order_Date = reader[4].ToString(),
+                            Cashier = reader[5].ToString(),
+                            Store_Name = reader[6].ToString(),
+                            Store_Address = reader[7].ToString()
                         };
+                        orderProducts.Add(orderProduct);
                     }
                 }
             }
 
-            return orderProduct;
+            return orderProducts;
+        }
+
+        public IEnumerable<OrderProductModel> GetByOrderId(int id)
+        {
+            List<OrderProductModel> orderProducts = new List<OrderProductModel>();
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "EXEC GetOrderProductsByOrderId order_id=@id;";
+                command.Parameters.Add("@id", System.Data.SqlDbType.NVarChar).Value = id;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        OrderProductModel orderProduct = new OrderProductModel()
+                        {
+                            Order_Id = reader[0].ToString(),
+                            Product_Name = reader[1].ToString(),
+                            Quantity = reader[2].ToString(),
+                            Price = reader[3].ToString(),
+                            Order_Date = reader[4].ToString(),
+                            Cashier = reader[5].ToString(),
+                            Store_Name = reader[6].ToString(),
+                            Store_Address = reader[7].ToString()
+                        };
+                        orderProducts.Add(orderProduct);
+                    }
+                }
+            }
+
+            return orderProducts;
         }
 
         public void Remove(int id)

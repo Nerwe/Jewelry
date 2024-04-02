@@ -22,41 +22,70 @@ namespace Jewelry.Repositories
             throw new NotImplementedException();
         }
 
-        public ProductModel GetById(int id)
+        public IEnumerable<ProductModel> GetById(int id)
         {
-            ProductModel product = null;
+            List<ProductModel> products = new List<ProductModel>();
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [Products] WHERE [product_id]=@id";
+                command.CommandText = "SELECT * FROM [Products] WHERE product_id=@id";
                 command.Parameters.Add("@id", System.Data.SqlDbType.NVarChar).Value = id;
 
                 using (var reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        product = new ProductModel()
+                        ProductModel product = new ProductModel()
                         {
                             Id = reader[0].ToString(),
                             Name = reader[1].ToString(),
                             Category_Id = reader[2].ToString(),
                             Metal_Id = reader[3].ToString(),
                             Size_Id = reader[4].ToString(),
-                            Price = reader[5].ToString()
+                            Price = reader[5].ToString(),
                         };
+                        products.Add(product);
                     }
                 }
             }
 
-            return product;
+            return products;
         }
 
-        public ProductModel GetByName(string name)
+        public IEnumerable<ProductModel> GetByName(string name)
         {
-            throw new NotImplementedException();
+            List<ProductModel> products = new List<ProductModel>();
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [Products] WHERE name=@name";
+                command.Parameters.Add("@name", System.Data.SqlDbType.NVarChar).Value = name;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ProductModel product = new ProductModel()
+                        {
+                            Name = reader[0].ToString(),
+                            Id = reader[1].ToString(),
+                            Category_Id = reader[2].ToString(),
+                            Metal_Id = reader[3].ToString(),
+                            Size_Id = reader[4].ToString(),
+                            Price = reader[5].ToString(),
+                        };
+                        products.Add(product);
+                    }
+                }
+            }
+
+            return products;
         }
 
         public void Remove(int id)
