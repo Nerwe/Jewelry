@@ -55,7 +55,7 @@ namespace Jewelry.ViewModel
 
         //Commands
         public ICommand ShowHomeViewCommand { get; }
-        public ICommand ShowOrdersViewCommand { get; }
+        public ICommand ShowAnalyzeViewCommand { get; }
 
         public MainViewModel()
         {
@@ -64,7 +64,7 @@ namespace Jewelry.ViewModel
 
             //Initialize commands
             ShowHomeViewCommand = new ViewModelCommand(ExecuteShowHomeCommand);
-            ShowOrdersViewCommand = new ViewModelCommand(ExecuteShowOrdersCommand);
+            ShowAnalyzeViewCommand = new ViewModelCommand(ExecuteShowAnalyzeCommand);
 
             //Default view
             ExecuteShowHomeCommand(null);
@@ -72,13 +72,12 @@ namespace Jewelry.ViewModel
             LoadCurrentUserData();
         }
 
-        private void ExecuteShowOrdersCommand(object obj)
+        private void ExecuteShowAnalyzeCommand(object obj)
         {
             CurrentChildView = new AnalyzeViewModel();
             Caption = "Analyze";
             Icon = IconChar.ListUl;
         }
-
         private void ExecuteShowHomeCommand(object obj)
         {
             CurrentChildView = new HomeViewModel();

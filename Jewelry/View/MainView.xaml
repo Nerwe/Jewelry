@@ -90,7 +90,7 @@
                     </RadioButton>
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color2}"
-                                 Command="{Binding ShowOrdersViewCommand}">
+                                 Command="{Binding ShowAnalyzeViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="ListUl" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Analyze" Style="{StaticResource menuButtonText}"/>

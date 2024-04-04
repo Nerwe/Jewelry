@@ -1,7 +1,6 @@
 ﻿using Jewelry.Model;
 using Jewelry.Repositories;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Jewelry.ViewModel
@@ -9,17 +8,17 @@ namespace Jewelry.ViewModel
     public class AnalyzeViewModel : ViewModelBase
     {
         //Fields
-        private List<ProductModel> _products;
-        private ProductRepository _productRepository;
-
-        private List<OrderModel> _orders;
-        private OrderRepository _orderRepository;
-
-        private List<OrderProductModel> _orderProducts;
+        private ObservableCollection<OrderProductModel> _orderProducts;
         private OrderProductRepository _orderProductRepository;
 
+        private ObservableCollection<ProductModel> _products;
+        private ProductRepository _productRepository;
+
+        private ObservableCollection<OrderModel> _orders;
+        private OrderRepository _orderRepository;
+
         //Properties
-        public List<ProductModel> Products
+        public ObservableCollection<ProductModel> Products
         {
             get => _products;
             set
@@ -28,7 +27,7 @@ namespace Jewelry.ViewModel
                 OnPropertyChanged(nameof(Products));
             }
         }
-        public List<OrderModel> Orders
+        public ObservableCollection<OrderModel> Orders
         {
             get => _orders;
             set
@@ -37,7 +36,7 @@ namespace Jewelry.ViewModel
                 OnPropertyChanged(nameof(Orders));
             }
         }
-        public List<OrderProductModel> OrderProducts
+        public ObservableCollection<OrderProductModel> OrderProducts
         {
             get => _orderProducts;
             set
@@ -50,6 +49,9 @@ namespace Jewelry.ViewModel
         //Commands /*OrderProducts*/
         public ICommand ShowOrderProductsCommand { get; }
         public ICommand ShowOrderProductsByOrderIdCommand { get; }
+        public ICommand ShowOrderProductsByOrderDateCommand { get; }
+        public ICommand ShowOrderProductsByOrderStoreIdCommand { get; }
+        public ICommand ShowOrderProductsByOrderCashierIdCommand { get; }
 
         //Commands /*Orders*/
         public ICommand ShowOrderCommand { get; }
@@ -68,11 +70,16 @@ namespace Jewelry.ViewModel
             _orderProductRepository = new OrderProductRepository();
 
             //Initialize Lists
-            OrderProducts = new List<OrderProductModel>();
+            OrderProducts = new ObservableCollection<OrderProductModel>();
+            Orders = new ObservableCollection<OrderModel>();
+            Products = new ObservableCollection<ProductModel>();
 
             //Initialize commands /*OrderProducts*/
             ShowOrderProductsCommand = new ViewModelCommand(ExecuteShowOrderProductsCommand);
             ShowOrderProductsByOrderIdCommand = new ViewModelCommand(ExecuteShowOrderProductsByOrderIdCommand);
+            ShowOrderProductsByOrderDateCommand = new ViewModelCommand(ExecuteShowOrderProductsByOrderDateCommand);
+            ShowOrderProductsByOrderStoreIdCommand = new ViewModelCommand(ExecuteShowOrderProductsByOrderStoreIdCommand);
+            ShowOrderProductsByOrderCashierIdCommand = new ViewModelCommand(ExecuteShowOrderProductsByOrderCashierIdCommand);
 
             //Initialize commands /*Orders*/
             ShowOrderCommand = new ViewModelCommand(ExecuteShowOrderCommand);
@@ -88,7 +95,7 @@ namespace Jewelry.ViewModel
             ExecuteShowOrderProductsCommand(null);
         }
 
-
+        //Execute commands /*OrderProducts*/
         private void ExecuteShowOrderProductsCommand(object obj)
         {
             OrderProducts.Clear();
@@ -109,7 +116,38 @@ namespace Jewelry.ViewModel
                 OrderProducts.Add(orderProduct);
             }
         }
+        private void ExecuteShowOrderProductsByOrderDateCommand(object obj)
+        {
+            OrderProducts.Clear();
 
+            var orderProductList = _orderProductRepository.GetByOrderDate("2023-01-01");
+            foreach (var orderProduct in orderProductList)
+            {
+                OrderProducts.Add(orderProduct);
+            }
+        }
+        private void ExecuteShowOrderProductsByOrderStoreIdCommand(object obj)
+        {
+            OrderProducts.Clear();
+
+            var orderProductList = _orderProductRepository.GetByOrderStoreId(2);
+            foreach (var orderProduct in orderProductList)
+            {
+                OrderProducts.Add(orderProduct);
+            }
+        }
+        private void ExecuteShowOrderProductsByOrderCashierIdCommand(object obj)
+        {
+            OrderProducts.Clear();
+
+            var orderProductList = _orderProductRepository.GetByOrderCashierId(2);
+            foreach (var orderProduct in orderProductList)
+            {
+                OrderProducts.Add(orderProduct);
+            }
+        }
+
+        //Execute commands /*Order*/
         private void ExecuteShowOrderCommand(object obj)
         {
             Orders.Clear();
@@ -141,6 +179,7 @@ namespace Jewelry.ViewModel
             }
         }
 
+        //Execute commands /*Products*/
         private void ExecuteShowProductCommand(object obj)
         {
             Products.Clear();
