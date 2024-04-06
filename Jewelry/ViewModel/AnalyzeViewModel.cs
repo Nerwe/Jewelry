@@ -8,6 +8,16 @@ namespace Jewelry.ViewModel
     public class AnalyzeViewModel : ViewModelBase
     {
         //Fields
+        private ComboBoxRepository _comboBoxRepository;
+
+        private string _tableName;
+        private string _fieldName;
+        private string _fieldValue;
+
+        private ObservableCollection<string> _tableNames;
+        private ObservableCollection<string> _fieldNames;
+        private ObservableCollection<string> _fieldValues;
+
         private ObservableCollection<OrderProductModel> _orderProducts;
         private OrderProductRepository _orderProductRepository;
 
@@ -18,6 +28,61 @@ namespace Jewelry.ViewModel
         private OrderRepository _orderRepository;
 
         //Properties
+        public string TableName
+        {
+            get => _tableName;
+            set
+            {
+                _tableName = value;
+                OnPropertyChanged(nameof(TableName));
+            }
+        }
+        public string FieldName
+        {
+            get => _fieldName;
+            set
+            {
+                _fieldName = value;
+                OnPropertyChanged(nameof(FieldName));
+            }
+        }
+        public string FieldValue
+        {
+            get => _fieldValue;
+            set
+            {
+                _fieldValue = value;
+                OnPropertyChanged(nameof(FieldValue));
+            }
+        }
+        public ObservableCollection<string> TableNames
+        {
+            get => _tableNames;
+            set
+            {
+                _tableNames = value;
+                OnPropertyChanged(nameof(TableNames));
+            }
+        }
+        public ObservableCollection<string> FieldNames
+        {
+            get => _fieldNames;
+            set
+            {
+                _fieldNames = value;
+                OnPropertyChanged(nameof(FieldNames));
+            }
+        }
+        public ObservableCollection<string> FieldValues
+        {
+            get => _fieldValues;
+            set
+            {
+                _fieldValues = value;
+                OnPropertyChanged(nameof(FieldValues));
+            }
+        }
+
         public ObservableCollection<ProductModel> Products
         {
             get => _products;
@@ -46,6 +111,10 @@ namespace Jewelry.ViewModel
             }
         }
 
+        //Commands /*ComboBox*/
+        public ICommand ShowFieldNamesCommand { get; }
+        public ICommand ShowFieldValuesCommand { get; }
+
         //Commands /*OrderProducts*/
         public ICommand ShowOrderProductsCommand { get; }
         public ICommand ShowOrderProductsByOrderIdCommand { get; }
@@ -65,14 +134,22 @@ namespace Jewelry.ViewModel
 
         public AnalyzeViewModel()
         {
+            _comboBoxRepository = new ComboBoxRepository();
             _productRepository = new ProductRepository();
             _orderRepository = new OrderRepository();
             _orderProductRepository = new OrderProductRepository();
 
             //Initialize Lists
+            TableNames = new ObservableCollection<string>(_comboBoxRepository.GetAllTableNames());
+            FieldNames = new ObservableCollection<string>();
+            FieldValues = new ObservableCollection<string>();
             OrderProducts = new ObservableCollection<OrderProductModel>();
             Orders = new ObservableCollection<OrderModel>();
             Products = new ObservableCollection<ProductModel>();
+
+            //Initialize commands /*ComboBox*/
+            ShowFieldNamesCommand = new ViewModelCommand(ExecuteShowFieldNamesCommand);
+            ShowFieldValuesCommand = new ViewModelCommand(ExecuteShowFieldValuesCommand);
 
             //Initialize commands /*OrderProducts*/
             ShowOrderProductsCommand = new ViewModelCommand(ExecuteShowOrderProductsCommand);
@@ -93,6 +170,35 @@ namespace Jewelry.ViewModel
 
             //Default view
             ExecuteShowOrderProductsCommand(null);
+        }
+
+
+        //Execute commands /*ComboBox*/
+
+        private void ExecuteShowFieldNamesCommand(object obj)
+        {
+            if (TableName != null)
+            {
+                FieldNames.Clear();
+                var fieldList = _comboBoxRepository.GetAllFieldsOfTable(TableName);
+                foreach (var field in fieldList)
+                {
+                    FieldNames.Add(field);
+                }
+            }
+        }
+
+        private void ExecuteShowFieldValuesCommand(object obj)
+        {
+            if (TableName != null && FieldName != null)
+            {
+                FieldValues.Clear();
+                var valueList = _comboBoxRepository.GetAllValuesOfField(TableName, FieldName);
+                foreach (var value in valueList)
+                {
+                    FieldValues.Add(value);
+                }
+            }
         }
 
         //Execute commands /*OrderProducts*/

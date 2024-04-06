@@ -16,14 +16,16 @@ namespace Jewelry.View
 
         private void ComboBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (CB.ItemsSource != null)
+            var comboBox = sender as ComboBox;
+
+            if (comboBox.ItemsSource != null)
             {
-                CB.IsDropDownOpen = true;
+                comboBox.IsDropDownOpen = true;
                 // убрать selection, если dropdown только открылся
                 var tb = (TextBox)e.OriginalSource;
                 tb.Select(tb.SelectionStart + tb.SelectionLength, 0);
-                CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(CB.ItemsSource);
-                cv.Filter = s => ((string)s).IndexOf(CB.Text, StringComparison.CurrentCultureIgnoreCase) >= 0;
+                CollectionView cv = (CollectionView)CollectionViewSource.GetDefaultView(comboBox.ItemsSource);
+                cv.Filter = s => ((string)s).IndexOf(comboBox.Text, StringComparison.CurrentCultureIgnoreCase) >= 0;
             }
         }
     }

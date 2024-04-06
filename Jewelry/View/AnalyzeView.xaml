@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Jewelry.View" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:vm="clr-namespace:Jewelry.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -27,32 +28,60 @@
                         VerticalAlignment="Top"
                         Grid.Column="0">
 
-                <ComboBox Style="{StaticResource ComboBoxFlatStyleOne}"
-                          Width="150"
-                          FontFamily="Monserrat"
-                          FontWeight="Medium"
-                          FontSize="12"
-                          Margin="10,0,10,0"
-                          VerticalContentAlignment="Center">
-                    <ComboBoxItem IsSelected="True" Content="Продажі"/>
-                    <ComboBoxItem Content="Товари"/>
-                    <ComboBoxItem Content="Касири"/>
-                    <ComboBoxItem Content="Магазини"/>
-                </ComboBox>
-
-                <ComboBox x:Name="CB"
-                          ItemsSource="{Binding OrderProducts}"
+                <ComboBox ItemsSource="{Binding TableNames}"
+                          SelectedItem="{Binding TableName}"
                           Style="{StaticResource ComboBoxFlatStyleOne}"
                           Width="150"
                           FontFamily="Monserrat"
                           FontWeight="Medium"
                           FontSize="12"
                           Margin="10,0,10,0"
-                          VerticalContentAlignment="Center"
                           TextBoxBase.TextChanged="ComboBox_TextChanged"
                           IsTextSearchEnabled="False"
                           IsEditable="True"
-                          VerticalAlignment="Top"/>
+                          VerticalContentAlignment="Center"
+                          VerticalAlignment="Top">
+                </ComboBox>
+
+                <ComboBox ItemsSource="{Binding FieldNames}"
+                          SelectedItem="{Binding FieldName}"
+                          Style="{StaticResource ComboBoxFlatStyleOne}"
+                          Width="150"
+                          FontFamily="Monserrat"
+                          FontWeight="Medium"
+                          FontSize="12"
+                          Margin="10,0,10,0"
+                          TextBoxBase.TextChanged="ComboBox_TextChanged"
+                          IsTextSearchEnabled="False"
+                          IsEditable="True"
+                          VerticalContentAlignment="Center"
+                          VerticalAlignment="Top">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownOpened">
+                            <i:InvokeCommandAction Command="{Binding ShowFieldNamesCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <ComboBox ItemsSource="{Binding FieldValues}"
+                          SelectedItem="{Binding FieldValue}"
+                          Style="{StaticResource ComboBoxFlatStyleOne}"
+                          Width="150"
+                          FontFamily="Monserrat"
+                          FontWeight="Medium"
+                          FontSize="12"
+                          Margin="10,0,10,0"
+                          TextBoxBase.TextChanged="ComboBox_TextChanged"
+                          IsTextSearchEnabled="False"
+                          IsEditable="True"
+                          VerticalContentAlignment="Center"
+                          VerticalAlignment="Top">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownOpened">
+                            <i:InvokeCommandAction Command="{Binding ShowFieldValuesCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </StackPanel>
 
             <Button Grid.Column="1"
