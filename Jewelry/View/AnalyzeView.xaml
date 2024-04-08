@@ -85,7 +85,7 @@
             </StackPanel>
 
             <Button Grid.Column="1"
-                    Command="{Binding ShowOrderProductsByOrderIdCommand}"                            
+                    Command="{Binding ExecuteShowFieldDatasCommand}"                            
                     Content="Search"                            
                     FontSize="12"
                     FontFamily="Montserrat"

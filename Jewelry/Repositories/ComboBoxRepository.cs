@@ -84,5 +84,33 @@ namespace Jewelry.Repositories
 
             return fieldValues;
         }
+
+        public IEnumerable<string> GetDataByFieldValue(string tableName, string fieldName, string fieldValue)
+        {
+            List<string> fieldData = new List<string>();
+
+            using (SqlConnection connection = GetConnection())
+            {
+                using (SqlCommand command = new SqlCommand("GetDataByFieldValue", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@TableName", tableName);
+                    command.Parameters.AddWithValue("@FieldName", fieldName);
+                    command.Parameters.AddWithValue("@FieldValue", fieldValue);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            object value = reader.GetValue(0);
+                            string stringValue = value.ToString();
+                            fieldData.Add(stringValue);
+                        }
+                    }
+                }
+            }
+
+            return fieldData;
+        }
     }
 }
