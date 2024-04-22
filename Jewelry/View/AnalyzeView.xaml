@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Jewelry.View" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:vm="clr-namespace:Jewelry.ViewModel"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -82,10 +83,11 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
+                <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}"/>
             </StackPanel>
 
             <Button Grid.Column="1"
-                    Command="{Binding ExecuteShowFieldDatasCommand}"                            
+                    Command="{Binding ShowOrderProductsByOrderDateCommand}"                            
                     Content="Search"                            
                     FontSize="12"
                     FontFamily="Montserrat"

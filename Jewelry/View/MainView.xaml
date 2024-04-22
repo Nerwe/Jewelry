@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:Jewelry.ViewModel"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800"
+        Title="MainView" Height="500" Width="1100"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"

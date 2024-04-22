@@ -1,5 +1,6 @@
 ﻿using Jewelry.Model;
 using Jewelry.Repositories;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -14,6 +15,8 @@ namespace Jewelry.ViewModel
         private string _fieldName;
         private string _fieldValue;
         private string _fieldData;
+
+        private DateTime _selectedDate;
 
         private ObservableCollection<string> _tableNames;
         private ObservableCollection<string> _fieldNames;
@@ -66,6 +69,17 @@ namespace Jewelry.ViewModel
                 OnPropertyChanged(nameof(FieldData));
             }
         }
+
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set
+            {
+                _selectedDate = value;
+                OnPropertyChanged(nameof(SelectedDate));
+            }
+        }
+
         public ObservableCollection<string> TableNames
         {
             get => _tableNames;
@@ -155,6 +169,8 @@ namespace Jewelry.ViewModel
 
         public AnalyzeViewModel()
         {
+            _selectedDate = DateTime.Now;
+
             _comboBoxRepository = new ComboBoxRepository();
             _productRepository = new ProductRepository();
             _orderRepository = new OrderRepository();
@@ -197,7 +213,6 @@ namespace Jewelry.ViewModel
 
 
         //Execute commands /*ComboBox*/
-
         private void ExecuteShowFieldNamesCommand(object obj)
         {
             if (TableName != null)
@@ -260,7 +275,7 @@ namespace Jewelry.ViewModel
         {
             OrderProducts.Clear();
 
-            var orderProductList = _orderProductRepository.GetByOrderDate("2023-01-01");
+            var orderProductList = _orderProductRepository.GetByOrderDate(SelectedDate.Date.ToString());
             foreach (var orderProduct in orderProductList)
             {
                 OrderProducts.Add(orderProduct);

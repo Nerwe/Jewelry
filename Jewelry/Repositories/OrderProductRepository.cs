@@ -171,7 +171,7 @@ namespace Jewelry.Repositories
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "EXEC GetOrderProductsByOrderDate @date=@date_t;";
-                command.Parameters.Add("@id", System.Data.SqlDbType.NVarChar).Value = date_t;
+                command.Parameters.Add("@date_t", System.Data.SqlDbType.NVarChar).Value = date_t;
 
                 using (var reader = command.ExecuteReader())
                 {
